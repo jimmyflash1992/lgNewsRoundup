@@ -147,10 +147,148 @@ body {
 /* Layout */
 
 .layout {
+
+.latest-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.more-headlines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.more-headlines-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.more-headlines-header h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
   display: grid;
+
+.latest-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.more-headlines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.more-headlines-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.more-headlines-header h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+
+.latest-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.more-headlines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.more-headlines-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.more-headlines-header h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
   gap: 28px;
+
+.latest-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.more-headlines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.more-headlines-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.more-headlines-header h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
   align-items: start;
+
+.latest-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.more-headlines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.more-headlines-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.more-headlines-header h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+}
+
+.latest-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.more-headlines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.more-headlines-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.more-headlines-header h3 {
+  margin: 0;
+  font-size: 1.05rem;
 }
 
 .label-pill {

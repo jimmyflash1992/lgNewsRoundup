@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <title>LG News Roundup</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/png" href="/logo.png" />
-  <link rel="shortcut icon" href="/logo.png" />
+  <!-- Favicon - use the smaller favicon.png file -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.png" />
   <link rel="stylesheet" href="styles.css" />
   <script src="app.js" defer></script>
 </head>
@@ -26,34 +27,45 @@
       </div>
     </header>
 
-    <!-- Hero section: Featured headline spanning full width -->
-    <section class="hero-section">
-      <div class="hero-content">
-        <div class="hero-text">
-          <h2 id="hero-title">Loading latest story…</h2>
-          <p id="hero-description">
-            As soon as the XML feed loads, your top story for this edition will appear here.
-          </p>
-          <div class="tag-row" id="hero-tags">
-            <span class="tag">Local government reform</span>
-            <span class="tag tag-secondary">Curated analysis</span>
-            <span class="tag tag-secondary">Weekly</span>
-          </div>
-        </div>
-        <img id="hero-image" class="hero-image" src="logo.png" alt="Lead story image" />
-      </div>
-      <footer class="hero-footer">
-        <span id="edition-status">Edition loading</span>
-        <span class="dot-separator"></span>
-        <span id="edition-date">Sent Fridays 6:45am AEST</span>
-      </footer>
-    </section>
-
     <main class="layout">
-      <!-- Two-column grid of stories -->
-      <div id="stories-list" class="stories-list"></div>
+      <section class="latest-column">
+        <!-- Lead Story -->
+        <section class="hero-section">
+          <div class="hero-content">
+            <div class="hero-text">
+              <h2 id="hero-title">Loading latest story…</h2>
+              <p id="hero-description">
+                As soon as the XML feed loads, your top story for this edition will appear here.
+              </p>
+              <div class="tag-row" id="hero-tags">
+                <span class="tag">Local government reform</span>
+                <span class="tag tag-secondary">Curated analysis</span>
+                <span class="tag tag-secondary">Weekly</span>
+              </div>
+            </div>
+            <img id="hero-image" class="hero-image" src="logo.png" alt="Lead story image" />
+          </div>
+          <footer class="hero-footer">
+            <span id="edition-status">Edition loading</span>
+            <span class="dot-separator"></span>
+            <span id="edition-date">Sent Fridays 6:45am AEST</span>
+          </footer>
+        </section>
 
-      <!-- Signup Card (static sidebar) -->
+        <!-- More Headlines -->
+        <section class="more-headlines">
+          <header class="more-headlines-header">
+            <div>
+              <h3>More headlines</h3>
+              <p class="notes-subtitle">Other stories from this edition.</p>
+            </div>
+          </header>
+
+          <div id="stories-list" class="stories-list"></div>
+        </section>
+      </section>
+
+      <!-- Signup card -->
       <aside class="signup-card">
         <header>
           <div class="label-pill label-pill-dark">
@@ -88,7 +100,6 @@
       </aside>
     </main>
 
-    <!-- Status message -->
     <p id="notes-status" class="notes-status">
       Loading latest stories…
     </p>
