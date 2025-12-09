@@ -14,10 +14,24 @@ async function loadFeed(url) {
   const notesStatus = document.getElementById("notes-status");
 
   try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error("Network error loading feed.xml");
-
-    const xmlText = await response.text();
+    // Try remote feed first (client site). If it fails (CORS or network), fall back to the provided local `url`.
+    let xmlText = null;
+    try {
+      const remoteUrl = "https://lgnewsroundup.com/feed/";
+      const remoteResp = await fetch(remoteUrl);
+      if (remoteResp && remoteResp.ok) {
+        xmlText = await remoteResp.text();
+        editionStatus && (editionStatus.textContent = "Loaded from lgnewsroundup.com");
+      } else {
+        throw new Error('Remote feed unavailable');
+      }
+    } catch (remoteErr) {
+      // Remote failed (likely CORS or network). Try the local file passed in `url`.
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Network error loading feed.xml");
+      xmlText = await response.text();
+      editionStatus && (editionStatus.textContent = "Loaded from local feed");
+    }
     const parser = new DOMParser();
     const xml = parser.parseFromString(xmlText, "application/xml");
 
@@ -73,9 +87,10 @@ async function loadFeed(url) {
     weeklyTag.textContent = "Weekly";
     heroTags.appendChild(weeklyTag);
 
-    // Hero image
-    if (hero.imageUrl) {
-      heroImage.style.backgroundImage = `url("${hero.imageUrl}")`;
+    // Hero image: set <img> src and use logo fallback
+    if (heroImage) {
+      heroImage.src = hero.imageUrl || "logo.png";
+      heroImage.alt = hero.title || "Lead story image";
     }
 
     // Edition meta
@@ -120,32 +135,45 @@ function normaliseItem(item) {
   );
   const primaryTag = categories[0] || "";
 
-  // Try to find an image from a few common RSS conventions
+  // Try to find an image from common RSS conventions or inside the description
   let imageUrl = null;
 
-  const trySelectors = [
-    "lg\\:cardImage",
-    "lg\\:featureImage",
-    "media\\:content",
-    "media\\:thumbnail",
-    "enclosure",
-    "image"
-  ];
+  // 1) enclosure url
+  const enclosure = item.querySelector('enclosure');
+  if (enclosure && enclosure.getAttribute('url')) {
+    imageUrl = enclosure.getAttribute('url');
+  }
 
-  for (const selector of trySelectors) {
-    const el = item.querySelector(selector);
-    if (!el) continue;
-
-    const url =
-      el.getAttribute("url") ||
-      el.getAttribute("href") ||
-      el.textContent.trim();
-
-    if (url) {
-      imageUrl = url;
-      break;
+  // 2) media:content / media:thumbnail or other namespaced media
+  if (!imageUrl) {
+    const mediaContent = item.getElementsByTagName('media:content')[0] || item.getElementsByTagName('media:thumbnail')[0];
+    if (mediaContent) {
+      imageUrl = mediaContent.getAttribute('url') || mediaContent.getAttribute('src') || mediaContent.textContent.trim();
     }
   }
+
+  // 3) look for an <img> tag inside description CDATA
+  if (!imageUrl) {
+    const descEl = item.querySelector('description');
+    if (descEl) {
+      const imgMatch = descEl.textContent.match(/<img[^>]+src=["']([^"']+)["']/i);
+      if (imgMatch) imageUrl = imgMatch[1];
+    }
+  }
+
+  // 4) last-resort: look for any child element with url/href attributes
+  if (!imageUrl) {
+    for (const child of Array.from(item.children)) {
+      const u = child.getAttribute && (child.getAttribute('url') || child.getAttribute('href') || child.getAttribute('src'));
+      if (u) {
+        imageUrl = u;
+        break;
+      }
+    }
+  }
+
+  // 5) fallback to logo.png (client should add their logo.png at repo root)
+  if (!imageUrl) imageUrl = 'logo.png';
 
   return {
     title,
@@ -160,6 +188,14 @@ function normaliseItem(item) {
 function renderStoryCard(story) {
   const article = document.createElement("article");
   article.className = "story-card";
+
+  // Optional image for the story
+  if (story.imageUrl) {
+    const img = document.createElement('img');
+    img.src = story.imageUrl || 'logo.png';
+    img.alt = story.title || 'Story image';
+    article.appendChild(img);
+  }
 
   const main = document.createElement("div");
   main.className = "story-main";
