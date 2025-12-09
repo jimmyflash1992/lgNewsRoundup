@@ -189,11 +189,16 @@ function renderStoryCard(story) {
   const article = document.createElement("article");
   article.className = "story-card";
 
-  // Optional image for the story
+  // Optional image for the story. If there's no image, show logo.png as fallback
   if (story.imageUrl) {
     const img = document.createElement('img');
-    img.src = story.imageUrl || 'logo.png';
+    img.src = story.imageUrl;
     img.alt = story.title || 'Story image';
+    article.appendChild(img);
+  } else {
+    const img = document.createElement('img');
+    img.src = 'logo.png';
+    img.alt = 'LG News Roundup logo';
     article.appendChild(img);
   }
 
