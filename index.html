@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>LG News Roundup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="page">
+    <header class="top-bar">
+      <div class="brand">
+        <img src="logo.png" alt="LG News Roundup logo" class="brand-logo" />
+        <div class="brand-text">
+          <h1>LG NEWS ROUNDUP</h1>
+          <p>Curated briefing for local government leaders</p>
+        </div>
+      </div>
+
+      <div class="next-pill">
+        <span class="dot"></span>
+        Next edition loading…
+      </div>
+    </header>
+
+    <main class="layout">
+      <!-- LEFT: Latest Edition -->
+      <section class="latest-card">
+        <header class="latest-header">
+          <div class="label-pill">
+            <span class="dot"></span>
+            Latest edition
+          </div>
+        </header>
+
+        <div class="latest-body">
+          <div class="latest-copy">
+            <h2 id="hero-title">Loading latest story…</h2>
+            <p id="hero-description">
+              As soon as the XML feed loads, your top story for this edition will appear here.
+            </p>
+
+            <div class="tag-row" id="hero-tags">
+              <span class="tag">Local government reform</span>
+              <span class="tag tag-secondary">Curated analysis</span>
+              <span class="tag tag-secondary">Weekly</span>
+            </div>
+          </div>
+
+          <div class="hero-image" id="hero-image"></div>
+        </div>
+
+        <footer class="latest-footer">
+          <div class="edition-meta">
+            <span id="edition-status">Edition loading</span>
+            <span class="dot-separator"></span>
+            <span id="edition-date">Sent Fridays 6:45am AEST</span>
+          </div>
+          <div class="powered">
+            Powered by <span class="powered-accent">AI-assisted briefing</span>
+          </div>
+        </footer>
+      </section>
+
+      <!-- RIGHT: Signup Card (static) -->
+      <aside class="signup-card">
+        <header>
+          <div class="label-pill label-pill-dark">
+            <span class="dot dot-green"></span>
+            Free weekly briefing
+          </div>
+          <h2>Beat the inbox overload</h2>
+          <p class="signup-lede">
+            One concise email that surfaces the local government stories, funding rounds and regulatory
+            changes that actually matter to your council.
+          </p>
+        </header>
+
+        <ul class="signup-points">
+          <li>Summarised news and reports from across Australian LG.</li>
+          <li>Funding and grant opportunities, without the sales pitch.</li>
+          <li>Infrastructure, roads, planning and digital transformation highlights.</li>
+        </ul>
+
+        <form class="signup-form" onsubmit="return false;">
+          <input
+            type="email"
+            placeholder="your.work.email@council.nsw.gov.au"
+            aria-label="Your work email"
+          />
+          <button type="submit">Get the next edition →</button>
+        </form>
+
+        <p class="signup-footnote">
+          Written for Australian local government. No spam, ever – unsubscribe in one click.
+        </p>
+      </aside>
+    </main>
+
+    <!-- Briefing notes list -->
+    <section class="notes-card">
+      <div class="notes-header">
+        <div>
+          <h3>This week's briefing notes</h3>
+          <p class="notes-subtitle">
+            Articles, reports and announcements featured in the latest email.
+          </p>
+        </div>
+      </div>
+
+      <div id="stories-list" class="stories-list"></div>
+
+      <p id="notes-status" class="notes-status">
+        Loading latest stories…
+      </p>
+    </section>
+
+    <footer class="site-footer">
+      <div class="footer-left">
+        <img src="logo.png" alt="" class="footer-logo" />
+        <span>LG News Roundup · Curated for Australian councils</span>
+      </div>
+      <div class="footer-right">
+        Built by a council engineer who reads the circulars so you don't have to.
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

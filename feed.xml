@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>LG News Roundup</title>
+    <link>https://lgnewsroundup.com</link>
+    <description>Curated briefing for local government leaders.</description>
+    <language>en-au</language>
+
+    <item>
+      <title>NSW infrastructure grants: what councils need to know</title>
+      <link>https://example.com/nsw-infrastructure-grants</link>
+      <pubDate>Wed, 25 Dec 2024 06:45:00 +1000</pubDate>
+      <category>Funding &amp; grants</category>
+      <description><![CDATA[
+        A quick breakdown of the latest NSW infrastructure funding round, key deadlines and which project types are most competitive this year.
+      ]]></description>
+    </item>
+
+    <item>
+      <title>Planning reforms reshaping regional housing supply</title>
+      <link>https://example.com/planning-reforms-regional-housing</link>
+      <pubDate>Wed, 25 Dec 2024 06:40:00 +1000</pubDate>
+      <category>Local government reform</category>
+      <description><![CDATA[
+        How recent planning changes are flowing through DA workloads and what it means for smaller regional councils.
+      ]]></description>
+    </item>
+
+    <item>
+      <title>Digital service delivery: lessons from three rural councils</title>
+      <link>https://example.com/digital-service-delivery</link>
+      <pubDate>Wed, 25 Dec 2024 06:35:00 +1000</pubDate>
+      <category>Digital transformation</category>
+      <description><![CDATA[
+        Practical examples of low-cost digital improvements that made a difference for ratepayers and staff.
+      ]]></description>
+    </item>
+
+    <item>
+      <title>Road re-sheeting programs: stretching limited capital budgets</title>
+      <link>https://example.com/road-resheeting-programs</link>
+      <pubDate>Wed, 25 Dec 2024 06:30:00 +1000</pubDate>
+      <category>Infrastructure &amp; roads</category>
+      <description><![CDATA[
+        A quick briefing on how councils are sequencing re-sheeting works to manage risk, cost and community expectations.
+      ]]></description>
+    </item>
+  </channel>
+</rss>
