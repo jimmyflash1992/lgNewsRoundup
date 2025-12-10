@@ -3,6 +3,8 @@ const DEFAULT_LOGO = "logo.png";
 document.addEventListener("DOMContentLoaded", () => {
   initThemeToggle();
   initNavDropdowns();
+  initNavToggle();
+  initSubscribeForm();
   // Local XML file in the same folder
   loadFeed("./feed.xml");
 });
@@ -27,37 +29,109 @@ function initNavDropdowns() {
 
     if (!trigger || !menu) return;
 
-    const openMenu = () => {
-      dropdown.classList.add("open");
-      trigger.setAttribute("aria-expanded", "true");
+    const setMenuOpen = (isOpen) => {
+      dropdown.classList.toggle("open", isOpen);
+      trigger.setAttribute("aria-expanded", String(isOpen));
     };
 
-    const closeMenu = () => {
-      dropdown.classList.remove("open");
-      trigger.setAttribute("aria-expanded", "false");
-    };
-
-    // Hover / pointer support
-    dropdown.addEventListener("pointerenter", openMenu);
-    dropdown.addEventListener("pointerleave", closeMenu);
+    // Hover / pointer support (ignore touch to avoid accidental open)
+    dropdown.addEventListener("pointerenter", (event) => {
+      if (event.pointerType === "mouse" || event.pointerType === "pen") {
+        setMenuOpen(true);
+      }
+    });
+    dropdown.addEventListener("pointerleave", (event) => {
+      if (event.pointerType === "mouse" || event.pointerType === "pen") {
+        setMenuOpen(false);
+      }
+    });
 
     // Keyboard and focus support
-    trigger.addEventListener("focus", openMenu);
-    trigger.addEventListener("blur", () => setTimeout(closeMenu, 100));
+    dropdown.addEventListener("focusin", () => setMenuOpen(true));
+    dropdown.addEventListener("focusout", () => {
+      setTimeout(() => {
+        if (!dropdown.contains(document.activeElement)) {
+          setMenuOpen(false);
+        }
+      }, 50);
+    });
 
     // Tap/click fallback for touch devices
     trigger.addEventListener("click", (event) => {
       event.preventDefault();
       const isOpen = dropdown.classList.toggle("open");
-      trigger.setAttribute("aria-expanded", isOpen);
+      trigger.setAttribute("aria-expanded", String(isOpen));
     });
 
     dropdown.addEventListener("keyup", (event) => {
       if (event.key === "Escape") {
-        closeMenu();
+        setMenuOpen(false);
         trigger.blur();
       }
     });
+
+    document.addEventListener("click", (event) => {
+      if (!dropdown.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    });
+  });
+}
+
+function initNavToggle() {
+  const nav = document.getElementById("primary-nav");
+  const toggle = document.getElementById("nav-toggle");
+
+  if (!nav || !toggle) return;
+
+  const closeNav = () => {
+    nav.classList.remove("is-open");
+    toggle.setAttribute("aria-expanded", "false");
+  };
+
+  toggle.addEventListener("click", () => {
+    const isOpen = nav.classList.toggle("is-open");
+    toggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  nav.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeNav);
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 720) {
+      closeNav();
+    }
+  });
+
+  document.addEventListener("keyup", (event) => {
+    if (event.key === "Escape") {
+      closeNav();
+    }
+  });
+}
+
+function initSubscribeForm() {
+  const form = document.querySelector(".subscribe-form");
+  if (!form) return;
+
+  const emailInput = form.querySelector('input[type="email"]');
+  const statusEl = document.createElement("p");
+  statusEl.className = "muted small subscribe-status";
+  statusEl.setAttribute("aria-live", "polite");
+  form.appendChild(statusEl);
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const email = emailInput ? emailInput.value.trim() : "";
+
+    if (!email) {
+      statusEl.textContent = "Please enter a work email to subscribe.";
+      emailInput?.focus();
+      return;
+    }
+
+    statusEl.textContent = "Thanks! We'll send the next edition to " + email + ".";
   });
 }
 
