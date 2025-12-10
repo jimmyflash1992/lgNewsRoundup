@@ -1,7 +1,54 @@
 document.addEventListener("DOMContentLoaded", () => {
+  initThemeToggle();
+  initNavDropdowns();
   // Local XML file in the same folder
   loadFeed("./feed.xml");
 });
+
+function initNavDropdowns() {
+  const triggers = document.querySelectorAll(".has-dropdown .nav-trigger");
+  triggers.forEach((trigger) => {
+    const parent = trigger.closest(".has-dropdown");
+    trigger.addEventListener("click", (event) => {
+      event.preventDefault();
+      const isOpen = parent.classList.toggle("open");
+      trigger.setAttribute("aria-expanded", isOpen);
+    });
+
+    trigger.addEventListener("blur", () => {
+      setTimeout(() => {
+        parent.classList.remove("open");
+        trigger.setAttribute("aria-expanded", false);
+      }, 150);
+    });
+  });
+}
+
+function initThemeToggle() {
+  const toggle = document.getElementById("theme-toggle");
+  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const savedTheme = localStorage.getItem("lg-theme");
+  const initialTheme = savedTheme || (prefersDark ? "dark" : "light");
+
+  applyTheme(initialTheme, toggle);
+
+  if (toggle) {
+    toggle.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme") || "light";
+      const next = current === "dark" ? "light" : "dark";
+      applyTheme(next, toggle);
+      localStorage.setItem("lg-theme", next);
+    });
+  }
+}
+
+function applyTheme(mode, toggleBtn) {
+  document.documentElement.setAttribute("data-theme", mode);
+  if (toggleBtn) {
+    toggleBtn.textContent = mode === "dark" ? "Light mode" : "Dark mode";
+    toggleBtn.setAttribute("aria-pressed", mode === "dark");
+  }
+}
 
 async function loadFeed(url) {
   const heroTitle = document.getElementById("hero-title");
@@ -72,12 +119,13 @@ async function loadFeed(url) {
 
     // Tags
     heroTags.innerHTML = "";
-    if (hero.primaryTag) {
+    const heroCategories = (hero.categories || []).slice(0, 4);
+    heroCategories.forEach((cat) => {
       const tag = document.createElement("span");
       tag.className = "tag";
-      tag.textContent = hero.primaryTag;
+      tag.textContent = cat;
       heroTags.appendChild(tag);
-    }
+    });
     const curatedTag = document.createElement("span");
     curatedTag.className = "tag tag-secondary";
     curatedTag.textContent = "Curated analysis";
@@ -90,8 +138,9 @@ async function loadFeed(url) {
 
     // Hero image: set <img> src and use logo fallback
     if (heroImage) {
-      heroImage.src = hero.imageUrl || "logo-mark.svg";
+      heroImage.src = hero.imageUrl || "logo.png";
       heroImage.alt = hero.title || "Lead story image";
+      heroImage.loading = "lazy";
     }
 
     // Edition meta
@@ -153,7 +202,8 @@ function normaliseItem(item) {
   const categories = Array.from(item.querySelectorAll("category")).map((c) =>
     c.textContent.trim()
   );
-  const primaryTag = categories[0] || "";
+  const categoriesDeduped = Array.from(new Set(categories));
+  const primaryTag = categoriesDeduped[0] || "";
 
   // Try to find an image from common RSS conventions or inside the description
   let imageUrl = null;
@@ -200,13 +250,14 @@ function normaliseItem(item) {
   }
 
   // 6) fallback to logo.png (client should add their logo.png at repo root)
-  if (!imageUrl) imageUrl = 'logo-mark.svg';
+  if (!imageUrl) imageUrl = 'logo.png';
 
   return {
     title,
     link,
     description,
     pubDate,
+    categories: categoriesDeduped,
     primaryTag,
     imageUrl
   };
@@ -222,18 +273,11 @@ function renderStoryCard(story) {
   const article = document.createElement("article");
   article.className = "story-card";
 
-  // Optional image for the story. If there's no image, show logo.png as fallback
-  if (story.imageUrl) {
-    const img = document.createElement('img');
-    img.src = story.imageUrl;
-    img.alt = story.title || 'Story image';
-    article.appendChild(img);
-  } else {
-    const img = document.createElement('img');
-    img.src = 'logo.png';
-    img.alt = 'LG News Roundup logo';
-    article.appendChild(img);
-  }
+  const storyImg = document.createElement('img');
+  storyImg.src = story.imageUrl || 'logo.png';
+  storyImg.alt = story.title || 'Story image';
+  storyImg.loading = 'lazy';
+  article.appendChild(storyImg);
 
   const main = document.createElement("div");
   main.className = "story-main";
@@ -262,12 +306,16 @@ function renderStoryCard(story) {
   const meta = document.createElement("div");
   meta.className = "story-meta";
 
-  if (story.primaryTag) {
+  const tagWrap = document.createElement("div");
+  tagWrap.className = "story-tags";
+  const tagsToRender = (story.categories || []).slice(0, 3);
+  tagsToRender.forEach((tagText) => {
     const tag = document.createElement("div");
     tag.className = "story-tag";
-    tag.textContent = story.primaryTag;
-    meta.appendChild(tag);
-  }
+    tag.textContent = tagText;
+    tagWrap.appendChild(tag);
+  });
+  if (tagWrap.childElementCount) meta.appendChild(tagWrap);
 
   if (story.pubDate instanceof Date && !isNaN(story.pubDate)) {
     const dateEl = document.createElement("div");
