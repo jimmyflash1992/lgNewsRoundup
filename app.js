@@ -97,6 +97,9 @@ async function loadFeed(url) {
     editionStatus.textContent = "Latest edition";
     if (hero.pubDate) {
       editionDate.textContent = "Edition date · " + formatDate(hero.pubDate);
+      // Mirror edition date into a duplicate element for alternate placements
+      const editionDup = document.getElementById("edition-date-duplicate");
+      if (editionDup) editionDup.textContent = editionDate.textContent;
     }
 
     // Render list
