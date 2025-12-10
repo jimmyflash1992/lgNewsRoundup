@@ -21,14 +21,15 @@
     <header class="masthead">
       <div class="masthead-inner">
         <div class="brand">
-          <img src="logo-mark.svg" alt="LG News Roundup" class="brand-logo" />
+          <img src="logo.png" alt="LG News Roundup" class="brand-logo" />
           <div class="brand-copy">
             <span class="brand-tag">LOCAL GOVERNMENT</span>
             <h1 class="brand-title">News Roundup</h1>
-            <p class="brand-sub">Concise briefings for Australian councils</p>
+            <p class="brand-sub">Australia's No. 1 podcast for local government news and views</p>
           </div>
         </div>
         <div class="masthead-actions">
+          <button id="theme-toggle" class="ghost-btn" aria-label="Toggle color mode">Dark mode</button>
           <button class="ghost-btn">View archive</button>
           <button class="primary-btn">Subscribe</button>
         </div>
@@ -36,9 +37,31 @@
       <nav class="primary-nav" aria-label="Primary">
         <ul>
           <li><a href="#" class="active">Latest headlines</a></li>
+          <li class="has-dropdown">
+            <button class="nav-trigger" aria-haspopup="true" aria-expanded="false">Mayors</button>
+            <ul class="dropdown" aria-label="Mayors by state">
+              <li><a href="#">NSW</a></li>
+              <li><a href="#">QLD</a></li>
+              <li><a href="#">VIC</a></li>
+              <li><a href="#">SA</a></li>
+              <li><a href="#">WA</a></li>
+              <li><a href="#">TAS</a></li>
+              <li><a href="#">NT</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <button class="nav-trigger" aria-haspopup="true" aria-expanded="false">CEO Appointments</button>
+            <ul class="dropdown" aria-label="CEO appointments by state">
+              <li><a href="#">NSW</a></li>
+              <li><a href="#">QLD</a></li>
+              <li><a href="#">VIC</a></li>
+              <li><a href="#">SA</a></li>
+              <li><a href="#">WA</a></li>
+              <li><a href="#">TAS</a></li>
+              <li><a href="#">NT</a></li>
+            </ul>
+          </li>
           <li><a href="#">Newsfeed</a></li>
-          <li><a href="#">Subscribe</a></li>
-          <li><a href="#">LG Daily</a></li>
           <li><a href="#">Podcast</a></li>
           <li><a href="#">About</a></li>
           <li><a href="#">Contact</a></li>
@@ -75,7 +98,7 @@
             </div>
 
             <div class="hero-media">
-              <img id="hero-image" src="logo-mark.svg" alt="Lead story image" />
+              <img id="hero-image" src="logo.png" alt="Lead story image" />
             </div>
           </div>
         </article>
@@ -88,9 +111,10 @@
             </div>
             <div class="filters">
               <button class="chip active">All</button>
-              <button class="chip">State</button>
-              <button class="chip">Councils</button>
-              <button class="chip">National</button>
+              <button class="chip">NSW</button>
+              <button class="chip">QLD</button>
+              <button class="chip">Governance</button>
+              <button class="chip">Engineering</button>
             </div>
           </header>
 
@@ -108,15 +132,64 @@
           <ul id="latest-list" class="list-links" aria-label="Latest briefings"></ul>
         </div>
 
+        <div class="card ad-card" aria-label="Advertisement placeholder">
+          <div class="pill">Sponsor</div>
+          <h4>Smart, unobtrusive ad slot</h4>
+          <p class="muted">Reserve this space for a Google Ads unit. Clean placement keeps focus on the news.</p>
+          <div class="ad-placeholder" role="presentation">Space for advertisements · 320×100 Google Ad slot</div>
+        </div>
+
         <div class="card contact-card">
           <h4>Lead contact</h4>
           <p class="muted">Gareth Lewis — Gareth.Lewis@dpc.tas.gov.au</p>
         </div>
 
         <div class="card promo-card">
-          <h4>LG Roundup podcast</h4>
-          <p class="muted">Listen on your commute for a five minute rundown.</p>
-          <button class="ghost-btn">Listen now →</button>
+          <div class="card-head">
+            <h4>Latest Roundup episodes</h4>
+            <a href="#" class="muted small-link">View all</a>
+          </div>
+          <ul class="media-list">
+            <li>
+              <div class="thumb" aria-hidden="true"></div>
+              <div>
+                <p class="media-title">Beach security, bulldog defence &amp; mistakes — #527</p>
+                <span class="muted small">11 min listen</span>
+              </div>
+            </li>
+            <li>
+              <div class="thumb" aria-hidden="true"></div>
+              <div>
+                <p class="media-title">Mayoral resignations and council rotations</p>
+                <span class="muted small">8 min listen</span>
+              </div>
+            </li>
+          </ul>
+          <button class="ghost-btn">Listen on Spotify →</button>
+        </div>
+
+        <div class="card promo-card">
+          <div class="card-head">
+            <h4>Latest VLGA Connect</h4>
+            <a href="#" class="muted small-link">Watch</a>
+          </div>
+          <ul class="media-list">
+            <li>
+              <div class="thumb video" aria-hidden="true"></div>
+              <div>
+                <p class="media-title">Victorian transport reforms with the VLGA</p>
+                <span class="muted small">Video · 6 mins</span>
+              </div>
+            </li>
+            <li>
+              <div class="thumb video" aria-hidden="true"></div>
+              <div>
+                <p class="media-title">Local law insights with Chris Eddy</p>
+                <span class="muted small">Video · 9 mins</span>
+              </div>
+            </li>
+          </ul>
+          <button class="ghost-btn">Open VLGA Connect →</button>
         </div>
 
         <div class="card subscribe-card">
