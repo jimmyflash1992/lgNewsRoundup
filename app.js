@@ -1,3 +1,5 @@
+const DEFAULT_LOGO = "logo.png";
+
 document.addEventListener("DOMContentLoaded", () => {
   initThemeToggle();
   initNavDropdowns();
@@ -5,21 +7,56 @@ document.addEventListener("DOMContentLoaded", () => {
   loadFeed("./feed.xml");
 });
 
+function setImageWithFallback(imgEl, src, alt) {
+  if (!imgEl) return;
+  imgEl.src = src || DEFAULT_LOGO;
+  imgEl.alt = alt || "Story image";
+  imgEl.loading = "lazy";
+  imgEl.onerror = () => {
+    if (imgEl.src.includes(DEFAULT_LOGO)) return;
+    imgEl.src = DEFAULT_LOGO;
+  };
+}
+
 function initNavDropdowns() {
-  const triggers = document.querySelectorAll(".has-dropdown .nav-trigger");
-  triggers.forEach((trigger) => {
-    const parent = trigger.closest(".has-dropdown");
+  const dropdowns = document.querySelectorAll(".has-dropdown");
+
+  dropdowns.forEach((dropdown) => {
+    const trigger = dropdown.querySelector(".nav-trigger");
+    const menu = dropdown.querySelector(".dropdown");
+
+    if (!trigger || !menu) return;
+
+    const openMenu = () => {
+      dropdown.classList.add("open");
+      trigger.setAttribute("aria-expanded", "true");
+    };
+
+    const closeMenu = () => {
+      dropdown.classList.remove("open");
+      trigger.setAttribute("aria-expanded", "false");
+    };
+
+    // Hover / pointer support
+    dropdown.addEventListener("pointerenter", openMenu);
+    dropdown.addEventListener("pointerleave", closeMenu);
+
+    // Keyboard and focus support
+    trigger.addEventListener("focus", openMenu);
+    trigger.addEventListener("blur", () => setTimeout(closeMenu, 100));
+
+    // Tap/click fallback for touch devices
     trigger.addEventListener("click", (event) => {
       event.preventDefault();
-      const isOpen = parent.classList.toggle("open");
+      const isOpen = dropdown.classList.toggle("open");
       trigger.setAttribute("aria-expanded", isOpen);
     });
 
-    trigger.addEventListener("blur", () => {
-      setTimeout(() => {
-        parent.classList.remove("open");
-        trigger.setAttribute("aria-expanded", false);
-      }, 150);
+    dropdown.addEventListener("keyup", (event) => {
+      if (event.key === "Escape") {
+        closeMenu();
+        trigger.blur();
+      }
     });
   });
 }
@@ -45,8 +82,13 @@ function initThemeToggle() {
 function applyTheme(mode, toggleBtn) {
   document.documentElement.setAttribute("data-theme", mode);
   if (toggleBtn) {
-    toggleBtn.textContent = mode === "dark" ? "Light mode" : "Dark mode";
-    toggleBtn.setAttribute("aria-pressed", mode === "dark");
+    const isDark = mode === "dark";
+    toggleBtn.setAttribute("aria-pressed", isDark);
+    toggleBtn.classList.toggle("is-dark", isDark);
+    const icon = toggleBtn.querySelector(".toggle-icon");
+    if (icon) {
+      icon.textContent = isDark ? "🌙" : "☀️";
+    }
   }
 }
 
@@ -59,7 +101,6 @@ async function loadFeed(url) {
   const editionDate = document.getElementById("edition-date");
   const storiesList = document.getElementById("stories-list");
   const notesStatus = document.getElementById("notes-status");
-  const latestList = document.getElementById("latest-list");
 
   try {
     // Try remote feed first (client site). If it fails (CORS or network), fall back to the provided local `url`.
@@ -137,11 +178,7 @@ async function loadFeed(url) {
     heroTags.appendChild(weeklyTag);
 
     // Hero image: set <img> src and use logo fallback
-    if (heroImage) {
-      heroImage.src = hero.imageUrl || "logo.png";
-      heroImage.alt = hero.title || "Lead story image";
-      heroImage.loading = "lazy";
-    }
+    setImageWithFallback(heroImage, hero.imageUrl || DEFAULT_LOGO, hero.title || "Lead story image");
 
     // Edition meta
     editionStatus.textContent = "Latest edition";
@@ -165,21 +202,6 @@ async function loadFeed(url) {
       notesStatus.textContent = "No additional stories in this edition yet.";
     }
 
-    // Sidebar latest list
-    if (latestList) {
-      latestList.innerHTML = "";
-      const latestItems = [hero, ...rest].slice(0, 5);
-      latestItems.forEach((story) => {
-        const li = document.createElement("li");
-        const link = document.createElement("a");
-        link.href = story.link || "#";
-        link.textContent = story.title || "Story";
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-        li.appendChild(link);
-        latestList.appendChild(li);
-      });
-    }
   } catch (err) {
     console.error(err);
     showErrorState();
@@ -250,7 +272,7 @@ function normaliseItem(item) {
   }
 
   // 6) fallback to logo.png (client should add their logo.png at repo root)
-  if (!imageUrl) imageUrl = 'logo.png';
+  if (!imageUrl) imageUrl = DEFAULT_LOGO;
 
   return {
     title,
@@ -274,9 +296,7 @@ function renderStoryCard(story) {
   article.className = "story-card";
 
   const storyImg = document.createElement('img');
-  storyImg.src = story.imageUrl || 'logo.png';
-  storyImg.alt = story.title || 'Story image';
-  storyImg.loading = 'lazy';
+  setImageWithFallback(storyImg, story.imageUrl || DEFAULT_LOGO, story.title || 'Story image');
   article.appendChild(storyImg);
 
   const main = document.createElement("div");
