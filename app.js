@@ -137,9 +137,8 @@ function initSubscribeForm() {
 
 function initThemeToggle() {
   const toggle = document.getElementById("theme-toggle");
-  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
   const savedTheme = localStorage.getItem("lg-theme");
-  const initialTheme = savedTheme || (prefersDark ? "dark" : "light");
+  const initialTheme = savedTheme || "light";
 
   applyTheme(initialTheme, toggle);
 
