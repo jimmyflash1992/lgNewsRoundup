@@ -170,7 +170,7 @@ body {
   align-items: center;
   overflow: visible;
 }
-.primary-nav a, .nav-trigger { text-decoration: none; color: var(--text-primary); font-weight: 700; padding: 8px 14px; border-radius: 12px; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 6px; background: transparent; cursor: pointer; white-space: nowrap; }
+.primary-nav a, .nav-trigger { text-decoration: none; color: var(--text-primary); font-family: inherit; font-weight: 700; padding: 8px 14px; border-radius: 12px; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 6px; background: transparent; cursor: pointer; white-space: nowrap; }
 .primary-nav a.active, .primary-nav a:hover, .primary-nav a:focus-visible, .primary-nav a:active,
 .nav-trigger:hover, .nav-trigger:focus-visible, .nav-trigger:active,
 .has-dropdown.open > .nav-trigger { background: var(--chip-bg-hover); border-color: var(--chip-border); }
