@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>LG News Roundup — Latest Headlines</title>
+  <title>LG News Roundup — Newsfeed</title>
   <meta name="description" content="Concise, curated local government news for councils." />
 
   <!-- Favicon -->
@@ -29,20 +29,26 @@
           </div>
         </div>
         <div class="masthead-actions">
-          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" aria-pressed="false">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" aria-pressed="false" type="button">
             <span class="sr-only">Toggle dark mode</span>
             <span class="toggle-thumb" aria-hidden="true"></span>
             <span class="toggle-icon" aria-hidden="true">☀️</span>
           </button>
           <button class="ghost-btn">View archive</button>
           <button class="primary-btn">Subscribe</button>
+          <button id="nav-toggle" class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" type="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+          </button>
         </div>
       </div>
-      <nav class="primary-nav" aria-label="Primary">
+      <nav id="primary-nav" class="primary-nav" aria-label="Primary">
         <ul>
-          <li><a href="#" class="active">Latest headlines</a></li>
+          <li><a href="#" class="active" aria-current="page">Newsfeed</a></li>
           <li class="has-dropdown">
-            <button class="nav-trigger" aria-haspopup="true" aria-expanded="false">Mayors</button>
+            <button class="nav-trigger" aria-haspopup="true" aria-expanded="false" type="button">Mayors</button>
             <ul class="dropdown" aria-label="Mayors by state">
               <li><a href="#">NSW</a></li>
               <li><a href="#">QLD</a></li>
@@ -51,10 +57,11 @@
               <li><a href="#">WA</a></li>
               <li><a href="#">TAS</a></li>
               <li><a href="#">NT</a></li>
+              <li><a href="#">ACT</a></li>
             </ul>
           </li>
           <li class="has-dropdown">
-            <button class="nav-trigger" aria-haspopup="true" aria-expanded="false">CEO Appointments</button>
+            <button class="nav-trigger" aria-haspopup="true" aria-expanded="false" type="button">CEO Appointments</button>
             <ul class="dropdown" aria-label="CEO appointments by state">
               <li><a href="#">NSW</a></li>
               <li><a href="#">QLD</a></li>
@@ -63,9 +70,9 @@
               <li><a href="#">WA</a></li>
               <li><a href="#">TAS</a></li>
               <li><a href="#">NT</a></li>
+              <li><a href="#">ACT</a></li>
             </ul>
           </li>
-          <li><a href="#">Newsfeed</a></li>
           <li><a href="#">Podcast</a></li>
           <li><a href="#">About</a></li>
           <li><a href="#">Contact</a></li>
@@ -194,7 +201,7 @@
           <div class="pill">Free weekly briefing</div>
           <h4>Get the next edition</h4>
           <p class="muted">A concise email surfacing the news that matters to councils.</p>
-          <form class="subscribe-form" onsubmit="return false;">
+          <form class="subscribe-form" novalidate>
             <input type="email" placeholder="your.work.email@council.gov.au" aria-label="Email" />
             <button>Subscribe →</button>
           </form>
