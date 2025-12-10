@@ -29,7 +29,11 @@
           </div>
         </div>
         <div class="masthead-actions">
-          <button id="theme-toggle" class="ghost-btn" aria-label="Toggle color mode">Dark mode</button>
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" aria-pressed="false">
+            <span class="sr-only">Toggle dark mode</span>
+            <span class="toggle-thumb" aria-hidden="true"></span>
+            <span class="toggle-icon" aria-hidden="true">☀️</span>
+          </button>
           <button class="ghost-btn">View archive</button>
           <button class="primary-btn">Subscribe</button>
         </div>
@@ -124,24 +128,18 @@
       </section>
 
       <aside class="sidebar">
-        <div class="card latest-card">
-          <div class="card-head">
-            <h4>Latest briefings</h4>
-            <a href="#" class="muted small-link">See all</a>
+        <div class="card ad-card" aria-label="Sponsored Google Ads placement">
+          <div class="ad-label">
+            <span class="google-mark" aria-hidden="true">G</span>
+            <div class="ad-label-copy">
+              <span class="ad-kicker">Sponsored</span>
+              <span class="ad-provider">Google Ads</span>
+            </div>
           </div>
-          <ul id="latest-list" class="list-links" aria-label="Latest briefings"></ul>
-        </div>
-
-        <div class="card ad-card" aria-label="Advertisement placeholder">
-          <div class="pill">Sponsor</div>
-          <h4>Smart, unobtrusive ad slot</h4>
-          <p class="muted">Reserve this space for a Google Ads unit. Clean placement keeps focus on the news.</p>
-          <div class="ad-placeholder" role="presentation">Space for advertisements · 320×100 Google Ad slot</div>
-        </div>
-
-        <div class="card contact-card">
-          <h4>Lead contact</h4>
-          <p class="muted">Gareth Lewis — Gareth.Lewis@dpc.tas.gov.au</p>
+          <p class="muted ad-copy">Reserve this space for a Google Ads unit. Clean placement keeps focus on the news.</p>
+          <div class="ad-placeholder" role="presentation">
+            <span class="ad-provider">Google</span> advertising — 320×100 slot
+          </div>
         </div>
 
         <div class="card promo-card">
@@ -201,15 +199,6 @@
             <button>Subscribe →</button>
           </form>
           <p class="foot muted">No spam. Unsubscribe anytime.</p>
-        </div>
-
-        <div class="card jobs-card">
-          <h4>Local government jobs</h4>
-          <ul class="list-links">
-            <li><a href="#">Procurement Officer, VIC</a></li>
-            <li><a href="#">Governance Lead, NSW</a></li>
-            <li><a href="#">Strategic Planner, QLD</a></li>
-          </ul>
         </div>
       </aside>
     </main>
