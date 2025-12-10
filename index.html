@@ -13,7 +13,7 @@
   <!-- Fonts: Bebas Neue (display) + Poppins (body) -->
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=ce11385">
+  <link rel="stylesheet" href="styles.css?v=20240912">
   <script src="app.js" defer></script>
 </head>
 <body>
@@ -21,53 +21,77 @@
     <header class="masthead">
       <div class="masthead-inner">
         <div class="brand">
-          <img src="logo.png" alt="LG News Roundup" class="brand-logo" />
+          <img src="logo-mark.svg" alt="LG News Roundup" class="brand-logo" />
           <div class="brand-copy">
-            <span class="brand-tag">LG</span>
+            <span class="brand-tag">LOCAL GOVERNMENT</span>
             <h1 class="brand-title">News Roundup</h1>
-            <p class="brand-sub">Curated briefing for local government leaders</p>
+            <p class="brand-sub">Concise briefings for Australian councils</p>
           </div>
         </div>
-        <nav class="top-nav" aria-label="Primary">
-          <ul>
-            <li><a href="#">Latest</a></li>
-            <li><a href="#">Archives</a></li>
-            <li><a href="#">About</a></li>
-          </ul>
-        </nav>
+        <div class="masthead-actions">
+          <button class="ghost-btn">View archive</button>
+          <button class="primary-btn">Subscribe</button>
+        </div>
       </div>
+      <nav class="primary-nav" aria-label="Primary">
+        <ul>
+          <li><a href="#" class="active">Latest headlines</a></li>
+          <li><a href="#">Newsfeed</a></li>
+          <li><a href="#">Subscribe</a></li>
+          <li><a href="#">LG Daily</a></li>
+          <li><a href="#">Podcast</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
     </header>
 
     <main class="layout">
       <section class="content-left">
         <article class="hero">
+          <div class="hero-header">
+            <span class="pill">Lead story</span>
+            <div class="hero-meta">
+              <span id="edition-status" class="edition-status">Edition loading</span>
+              <span class="dot-sep"></span>
+              <span id="edition-date" class="edition-date">&nbsp;</span>
+              <span id="edition-date-duplicate" class="edition-date-duplicate" aria-hidden="true"></span>
+            </div>
+          </div>
+
           <div class="hero-body">
             <div class="hero-copy">
-              <div class="meta-row">
-                <span id="edition-status" class="edition-status">Edition loading</span>
-                <span class="dot-sep"></span>
-                <span id="edition-date" class="edition-date">&nbsp;</span>
-                <span id="edition-date-duplicate" class="edition-date-duplicate" aria-hidden="true"></span>
-              </div>
-
               <h2 id="hero-title">Loading latest story…</h2>
               <p id="hero-description">As soon as the feed loads, the top story will appear here.</p>
 
               <div id="hero-tags" class="tag-row">
                 <!-- tags populated by JS -->
               </div>
+
+              <div class="hero-actions">
+                <button class="primary-btn">Share briefing</button>
+                <button class="ghost-btn">Save for later</button>
+              </div>
             </div>
 
             <div class="hero-media">
-              <img id="hero-image" src="logo.png" alt="Lead story image" />
+              <img id="hero-image" src="logo-mark.svg" alt="Lead story image" />
             </div>
           </div>
         </article>
 
         <section class="more-headlines">
           <header class="section-head">
-            <h3>More headlines</h3>
-            <p class="muted">Other stories from this edition</p>
+            <div>
+              <h3>More headlines</h3>
+              <p class="muted">Stories from this edition</p>
+            </div>
+            <div class="filters">
+              <button class="chip active">All</button>
+              <button class="chip">State</button>
+              <button class="chip">Councils</button>
+              <button class="chip">National</button>
+            </div>
           </header>
 
           <div id="stories-list" class="stories-list" role="list"></div>
@@ -76,10 +100,29 @@
       </section>
 
       <aside class="sidebar">
-        <div class="subscribe-card">
+        <div class="card latest-card">
+          <div class="card-head">
+            <h4>Latest briefings</h4>
+            <a href="#" class="muted small-link">See all</a>
+          </div>
+          <ul id="latest-list" class="list-links" aria-label="Latest briefings"></ul>
+        </div>
+
+        <div class="card contact-card">
+          <h4>Lead contact</h4>
+          <p class="muted">Gareth Lewis — Gareth.Lewis@dpc.tas.gov.au</p>
+        </div>
+
+        <div class="card promo-card">
+          <h4>LG Roundup podcast</h4>
+          <p class="muted">Listen on your commute for a five minute rundown.</p>
+          <button class="ghost-btn">Listen now →</button>
+        </div>
+
+        <div class="card subscribe-card">
           <div class="pill">Free weekly briefing</div>
           <h4>Get the next edition</h4>
-          <p class="muted">A single concise email surfacing the news that matters to councils.</p>
+          <p class="muted">A concise email surfacing the news that matters to councils.</p>
           <form class="subscribe-form" onsubmit="return false;">
             <input type="email" placeholder="your.work.email@council.gov.au" aria-label="Email" />
             <button>Subscribe →</button>
@@ -87,9 +130,13 @@
           <p class="foot muted">No spam. Unsubscribe anytime.</p>
         </div>
 
-        <div class="about-card">
-          <h5>About</h5>
-          <p class="muted">Curated by a council engineer who reads the circulars so you don't have to.</p>
+        <div class="card jobs-card">
+          <h4>Local government jobs</h4>
+          <ul class="list-links">
+            <li><a href="#">Procurement Officer, VIC</a></li>
+            <li><a href="#">Governance Lead, NSW</a></li>
+            <li><a href="#">Strategic Planner, QLD</a></li>
+          </ul>
         </div>
       </aside>
     </main>

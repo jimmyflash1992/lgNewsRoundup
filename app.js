@@ -12,6 +12,7 @@ async function loadFeed(url) {
   const editionDate = document.getElementById("edition-date");
   const storiesList = document.getElementById("stories-list");
   const notesStatus = document.getElementById("notes-status");
+  const latestList = document.getElementById("latest-list");
 
   try {
     // Try remote feed first (client site). If it fails (CORS or network), fall back to the provided local `url`.
@@ -89,7 +90,7 @@ async function loadFeed(url) {
 
     // Hero image: set <img> src and use logo fallback
     if (heroImage) {
-      heroImage.src = hero.imageUrl || "logo.png";
+      heroImage.src = hero.imageUrl || "logo-mark.svg";
       heroImage.alt = hero.title || "Lead story image";
     }
 
@@ -104,7 +105,7 @@ async function loadFeed(url) {
 
     // Render list
     storiesList.innerHTML = "";
-    const extraStories = rest.slice(0, 6);
+    const extraStories = rest.slice(0, 8);
 
     if (extraStories.length) {
       extraStories.forEach((story) => {
@@ -113,6 +114,22 @@ async function loadFeed(url) {
       notesStatus.textContent = "";
     } else {
       notesStatus.textContent = "No additional stories in this edition yet.";
+    }
+
+    // Sidebar latest list
+    if (latestList) {
+      latestList.innerHTML = "";
+      const latestItems = [hero, ...rest].slice(0, 5);
+      latestItems.forEach((story) => {
+        const li = document.createElement("li");
+        const link = document.createElement("a");
+        link.href = story.link || "#";
+        link.textContent = story.title || "Story";
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        li.appendChild(link);
+        latestList.appendChild(li);
+      });
     }
   } catch (err) {
     console.error(err);
@@ -159,12 +176,19 @@ function normaliseItem(item) {
   if (!imageUrl) {
     const descEl = item.querySelector('description');
     if (descEl) {
-      const imgMatch = descEl.textContent.match(/<img[^>]+src=["']([^"']+)["']/i);
-      if (imgMatch) imageUrl = imgMatch[1];
+      imageUrl = extractImgSrc(descEl.textContent);
     }
   }
 
-  // 4) last-resort: look for any child element with url/href attributes
+  // 4) look for an <img> inside content:encoded (WordPress full content)
+  if (!imageUrl) {
+    const contentEl = item.getElementsByTagName('content:encoded')[0];
+    if (contentEl) {
+      imageUrl = extractImgSrc(contentEl.textContent);
+    }
+  }
+
+  // 5) last-resort: look for any child element with url/href attributes
   if (!imageUrl) {
     for (const child of Array.from(item.children)) {
       const u = child.getAttribute && (child.getAttribute('url') || child.getAttribute('href') || child.getAttribute('src'));
@@ -175,8 +199,8 @@ function normaliseItem(item) {
     }
   }
 
-  // 5) fallback to logo.png (client should add their logo.png at repo root)
-  if (!imageUrl) imageUrl = 'logo.png';
+  // 6) fallback to logo.png (client should add their logo.png at repo root)
+  if (!imageUrl) imageUrl = 'logo-mark.svg';
 
   return {
     title,
@@ -186,6 +210,12 @@ function normaliseItem(item) {
     primaryTag,
     imageUrl
   };
+}
+
+function extractImgSrc(htmlText) {
+  if (!htmlText) return null;
+  const imgMatch = htmlText.match(/<img[^>]+src=["']([^"']+)["']/i);
+  return imgMatch ? imgMatch[1] : null;
 }
 
 function renderStoryCard(story) {
