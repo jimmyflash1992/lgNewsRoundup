@@ -35,25 +35,42 @@ function initNavDropdowns() {
     };
 
     // Hover / pointer support (ignore touch to avoid accidental open)
+    // Use a short close delay so slow mouse movements into the dropdown don't close it.
+    let closeTimer = null;
+    const CLOSE_DELAY = 200; // ms
+
+    const clearCloseTimer = () => {
+      if (closeTimer) {
+        clearTimeout(closeTimer);
+        closeTimer = null;
+      }
+    };
+
     dropdown.addEventListener("pointerenter", (event) => {
       if (event.pointerType === "mouse" || event.pointerType === "pen") {
+        clearCloseTimer();
         setMenuOpen(true);
       }
     });
     dropdown.addEventListener("pointerleave", (event) => {
       if (event.pointerType === "mouse" || event.pointerType === "pen") {
-        setMenuOpen(false);
+        clearCloseTimer();
+        closeTimer = setTimeout(() => setMenuOpen(false), CLOSE_DELAY);
       }
     });
 
     // Keyboard and focus support
-    dropdown.addEventListener("focusin", () => setMenuOpen(true));
+    dropdown.addEventListener("focusin", () => {
+      clearCloseTimer();
+      setMenuOpen(true);
+    });
     dropdown.addEventListener("focusout", () => {
-      setTimeout(() => {
+      clearCloseTimer();
+      closeTimer = setTimeout(() => {
         if (!dropdown.contains(document.activeElement)) {
           setMenuOpen(false);
         }
-      }, 50);
+      }, CLOSE_DELAY);
     });
 
     // Tap/click fallback for touch devices
@@ -61,6 +78,7 @@ function initNavDropdowns() {
       event.preventDefault();
       const isOpen = dropdown.classList.toggle("open");
       trigger.setAttribute("aria-expanded", String(isOpen));
+      if (isOpen) clearCloseTimer();
     });
 
     dropdown.addEventListener("keyup", (event) => {
@@ -72,6 +90,7 @@ function initNavDropdowns() {
 
     document.addEventListener("click", (event) => {
       if (!dropdown.contains(event.target)) {
+        clearCloseTimer();
         setMenuOpen(false);
       }
     });
