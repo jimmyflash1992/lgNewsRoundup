@@ -1,0 +1,199 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="brand">
+        <img src="/logo.svg" alt="LG News Roundup" class="brand-logo" />
+        <div class="brand-copy">
+          <span class="brand-tag">LOCAL GOVERNMENT</span>
+          <h1 class="brand-title">News Roundup</h1>
+          <p class="brand-sub">Australia's No. 1 podcast for local government news and views</p>
+        </div>
+      </div>
+      <div class="masthead-actions">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" aria-pressed="false" type="button">
+          <span class="sr-only">Toggle dark mode</span>
+          <span class="toggle-thumb" aria-hidden="true"></span>
+          <span class="toggle-icon" aria-hidden="true">☀️</span>
+        </button>
+        <button class="primary-btn">Subscribe</button>
+        <button id="nav-toggle" class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" type="button">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+      </div>
+    </div>
+    <nav id="primary-nav" class="primary-nav" aria-label="Primary">
+      <ul>
+        <li><a href="#" class="active" aria-current="page">Newsfeed</a></li>
+        <li class="has-dropdown">
+          <button class="nav-trigger" aria-haspopup="true" aria-expanded="false" type="button">Mayors</button>
+          <ul class="dropdown" aria-label="Mayors by state">
+            <li><a href="#">NSW</a></li>
+            <li><a href="#">QLD</a></li>
+            <li><a href="#">VIC</a></li>
+            <li><a href="#">SA</a></li>
+            <li><a href="#">WA</a></li>
+            <li><a href="#">TAS</a></li>
+            <li><a href="#">NT</a></li>
+            <li><a href="#">ACT</a></li>
+          </ul>
+        </li>
+        <li class="has-dropdown">
+          <button class="nav-trigger" aria-haspopup="true" aria-expanded="false" type="button">CEO Appointments</button>
+          <ul class="dropdown" aria-label="CEO appointments by state">
+            <li><a href="#">NSW</a></li>
+            <li><a href="#">QLD</a></li>
+            <li><a href="#">VIC</a></li>
+            <li><a href="#">SA</a></li>
+            <li><a href="#">WA</a></li>
+            <li><a href="#">TAS</a></li>
+            <li><a href="#">NT</a></li>
+            <li><a href="#">ACT</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Podcast</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="layout">
+    <section class="content-left">
+      <article class="hero">
+        <div class="hero-header">
+          <span class="pill">Lead story</span>
+          <div class="hero-meta">
+            <span id="edition-status" class="edition-status">Edition loading</span>
+            <span class="dot-sep"></span>
+            <span id="edition-date" class="edition-date">&nbsp;</span>
+            <span id="edition-date-duplicate" class="edition-date-duplicate" aria-hidden="true"></span>
+          </div>
+        </div>
+
+        <div class="hero-body">
+          <div class="hero-copy">
+            <h2 id="hero-title">Loading latest story…</h2>
+            <p id="hero-description">As soon as the feed loads, the top story will appear here.</p>
+
+            <div id="hero-tags" class="tag-row"></div>
+
+            <div class="hero-actions">
+              <button class="primary-btn">Share briefing</button>
+              <button class="ghost-btn">Save for later</button>
+            </div>
+          </div>
+
+          <div class="hero-media">
+            <img id="hero-image" src="/logo.svg" alt="Lead story image" />
+          </div>
+        </div>
+      </article>
+
+      <section class="more-headlines">
+        <header class="section-head">
+          <div>
+            <h3>More headlines</h3>
+            <p class="muted">Stories from this edition</p>
+          </div>
+          <div class="filters">
+            <button class="chip active">All</button>
+            <button class="chip">NSW</button>
+            <button class="chip">QLD</button>
+            <button class="chip">Governance</button>
+            <button class="chip">Engineering</button>
+          </div>
+        </header>
+
+        <div id="stories-list" class="stories-list" role="list"></div>
+        <p id="notes-status" class="notes-status">Loading latest stories…</p>
+      </section>
+    </section>
+
+    <aside class="sidebar">
+      <div class="card ad-card" aria-label="Sponsored Google Ads placement">
+        <div class="ad-label">
+          <span class="google-mark" aria-hidden="true">G</span>
+          <div class="ad-label-copy">
+            <span class="ad-kicker">Sponsored</span>
+            <span class="ad-provider">Google Ads</span>
+          </div>
+        </div>
+        <p class="muted ad-copy">Reserve this space for a Google Ads unit. Clean placement keeps focus on the news.</p>
+        <div class="ad-placeholder" role="presentation">
+          <span class="ad-provider">Google</span> advertising — 320×100 slot
+        </div>
+      </div>
+
+      <div class="card promo-card">
+        <div class="card-head">
+          <h4>Latest Roundup episodes</h4>
+          <a href="#" class="muted small-link">View all</a>
+        </div>
+        <ul class="media-list">
+          <li>
+            <div class="thumb" aria-hidden="true"></div>
+            <div>
+              <p class="media-title">Beach security, bulldog defence &amp; mistakes — #527</p>
+              <span class="muted small">11 min listen</span>
+            </div>
+          </li>
+          <li>
+            <div class="thumb" aria-hidden="true"></div>
+            <div>
+              <p class="media-title">Mayoral resignations and council rotations</p>
+              <span class="muted small">8 min listen</span>
+            </div>
+          </li>
+        </ul>
+        <button class="ghost-btn">Listen on Spotify →</button>
+      </div>
+
+      <div class="card promo-card">
+        <div class="card-head">
+          <h4>Latest VLGA Connect</h4>
+          <a href="#" class="muted small-link">Watch</a>
+        </div>
+        <ul class="media-list">
+          <li>
+            <div class="thumb video" aria-hidden="true"></div>
+            <div>
+              <p class="media-title">Victorian transport reforms with the VLGA</p>
+              <span class="muted small">Video · 6 mins</span>
+            </div>
+          </li>
+          <li>
+            <div class="thumb video" aria-hidden="true"></div>
+            <div>
+              <p class="media-title">Local law insights with Chris Eddy</p>
+              <span class="muted small">Video · 9 mins</span>
+            </div>
+          </li>
+        </ul>
+        <button class="ghost-btn">Open VLGA Connect →</button>
+      </div>
+
+      <div class="card subscribe-card">
+        <div class="pill">Free weekly briefing</div>
+        <h4>Get the next edition</h4>
+        <p class="muted">A concise email surfacing the news that matters to councils.</p>
+        <form class="subscribe-form" novalidate>
+          <input type="email" placeholder="your.work.email@council.gov.au" aria-label="Email" />
+          <button>Subscribe →</button>
+        </form>
+        <p class="foot muted">No spam. Unsubscribe anytime.</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="left">LG News Roundup · Curated for Australian councils</div>
+    </div>
+  </footer>
+</BaseLayout>
