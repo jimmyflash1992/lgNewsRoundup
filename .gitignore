@@ -1,0 +1,20 @@
+# Node/PNPM
+node_modules/
+pnpm-lock.yaml
+package-lock.json
+npm-debug.log*
+
+# Astro build outputs
+frontend/.astro/
+frontend/dist/
+
+# Astro public assets synced from repo root (not tracked)
+frontend/public/app.js
+frontend/public/feed.xml
+frontend/public/favicon.png
+frontend/public/logo.png
+frontend/public/logo-mark.svg
+
+# Local tooling
+.DS_Store
+.vscode/
