@@ -16,6 +16,12 @@ const { title = "LG News Roundup — Newsfeed", description = "Concise, curated 
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap"
       rel="stylesheet"
     />
+    <script is:inline>
+      const savedTheme = localStorage.getItem("lg-theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const initialTheme = savedTheme || (prefersDark ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", initialTheme);
+    </script>
   </head>
   <body>
     <div class="page">

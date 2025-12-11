@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initNavDropdowns();
   initNavToggle();
   initSubscribeForm();
-  // Local XML file in the same folder
-  loadFeed("./feed.xml");
+  // Prefer proxied feed (handles CORS) then fall back to local XML
+  loadFeed("/api/feed.xml", "/feed.xml");
 });
 
 function setImageWithFallback(imgEl, src, alt) {
@@ -165,7 +165,7 @@ function applyTheme(mode, toggleBtn) {
   }
 }
 
-async function loadFeed(url) {
+async function loadFeed(apiUrl, fallbackUrl) {
   const heroTitle = document.getElementById("hero-title");
   const heroDescription = document.getElementById("hero-description");
   const heroImage = document.getElementById("hero-image");
@@ -176,24 +176,27 @@ async function loadFeed(url) {
   const notesStatus = document.getElementById("notes-status");
 
   try {
-    // Try remote feed first (client site). If it fails (CORS or network), fall back to the provided local `url`.
     let xmlText = null;
-    try {
-      const remoteUrl = "https://lgnewsroundup.com/feed/";
-      const remoteResp = await fetch(remoteUrl);
-      if (remoteResp && remoteResp.ok) {
-        xmlText = await remoteResp.text();
-        editionStatus && (editionStatus.textContent = "Loaded from lgnewsroundup.com");
-      } else {
-        throw new Error('Remote feed unavailable');
+
+    const apiResponse = await fetch(apiUrl);
+
+    if (apiResponse.ok) {
+      xmlText = await apiResponse.text();
+      const sourceHeader = apiResponse.headers.get("x-feed-source");
+      if (editionStatus) {
+        editionStatus.textContent =
+          sourceHeader === "remote" ? "Loaded from lgnewsroundup.com" : "Loaded from local feed";
       }
-    } catch (remoteErr) {
-      // Remote failed (likely CORS or network). Try the local file passed in `url`.
-      const response = await fetch(url);
-      if (!response.ok) throw new Error("Network error loading feed.xml");
-      xmlText = await response.text();
-      editionStatus && (editionStatus.textContent = "Loaded from local feed");
     }
+
+    if (!xmlText && fallbackUrl) {
+      const fallbackResponse = await fetch(fallbackUrl);
+      if (!fallbackResponse.ok) throw new Error("Network error loading fallback feed.xml");
+      xmlText = await fallbackResponse.text();
+      editionStatus && (editionStatus.textContent = "Loaded from bundled feed");
+    }
+    if (!xmlText) throw new Error("No feed response");
+
     const parser = new DOMParser();
     const xml = parser.parseFromString(xmlText, "application/xml");
 
