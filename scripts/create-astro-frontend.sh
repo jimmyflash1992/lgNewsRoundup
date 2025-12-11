@@ -30,9 +30,8 @@ npx astro add sitemap --yes || true
 
 echo "Copying brand assets to frontend/public..."
 mkdir -p public
-cp ../logo.png public/logo.png 2>/dev/null || true
+cp ../logo.svg public/logo.svg 2>/dev/null || true
 cp ../favicon.png public/favicon.png 2>/dev/null || true
-cp ../logo-mark.svg public/logo-mark.svg 2>/dev/null || true
 
 echo "Done. To start dev server:"
 echo "  cd frontend && npm run dev -- --host 0.0.0.0 --port 4321"

@@ -15,7 +15,7 @@ Manual steps (summary):
 1. From repo root, ensure branch `firstdraft`.
 2. Create Astro: `npm create astro@latest frontend -- --template blog` then `cd frontend` and `npm install`.
 3. Add Tailwind + sitemap: `npx astro add tailwind` and `npx astro add sitemap`.
-4. Copy assets: `cp ../logo.png public/logo.png` (and `favicon.png`, `logo-mark.svg`).
+4. Copy assets: `cp ../logo.svg public/logo.svg` (and `favicon.png`).
 5. Append the repo `styles.css` into `frontend/src/styles/global.css` below Tailwind directives.
 6. Add the following project files (templates available in the planning prompt):
    - `src/layouts/BaseLayout.astro`

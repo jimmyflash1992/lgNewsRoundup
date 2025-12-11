@@ -1,0 +1,60 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getAllPostSlugs, getPostBySlug } from "../../lib/wp";
+import type { WPPost } from "../../lib/wp";
+
+export async function getStaticPaths() {
+  const slugs = await getAllPostSlugs();
+
+  return slugs.map((slug) => ({
+    params: { slug },
+    props: { slug },
+  }));
+}
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props as Props;
+const post: WPPost | null = await getPostBySlug(slug);
+
+if (!post) {
+  throw new Error(`Post not found for slug: ${slug}`);
+}
+
+const fallbackDescription =
+  post.excerpt ||
+  post.content.replace(/<[^>]+>/g, "").slice(0, 160) ||
+  "LG News Roundup story.";
+---
+
+<BaseLayout
+  title={`${post.title} | LG News Roundup`}
+  description={fallbackDescription}
+  image={post.imageUrl}
+>
+  <main class="post-layout">
+    <article class="post">
+      <header class="post-header">
+        <p class="post-date">
+          {new Date(post.date).toLocaleDateString("en-AU", {
+            weekday: "short",
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          })}
+        </p>
+        <h1 class="post-title" set:html={post.title} />
+      </header>
+
+      {post.imageUrl && (
+        <div class="post-hero-image">
+          <img src={post.imageUrl} alt={post.title} loading="lazy" />
+        </div>
+      )}
+
+      <section class="post-body" set:html={post.content} />
+    </article>
+  </main>
+</BaseLayout>

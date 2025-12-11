@@ -1,0 +1,64 @@
+---
+import type { WPPost } from "../lib/wp";
+
+export interface Props {
+  post: WPPost;
+}
+
+const { post } = Astro.props;
+const date = new Date(post.date).toLocaleDateString("en-AU", {
+  weekday: "short",
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
+---
+
+<article class="hero">
+  <div class="hero-header">
+    <span class="pill">Lead story</span>
+    <div class="hero-meta">
+      <span class="edition-status">Latest edition</span>
+      <span class="dot-sep"></span>
+      <span class="edition-date">{date}</span>
+    </div>
+  </div>
+
+  <div class="hero-body">
+    <div class="hero-copy">
+      <h2 class="hero-title">
+        <a href={`/posts/${post.slug}/`}>{post.title}</a>
+      </h2>
+
+      {post.excerpt && (
+        <p class="hero-description">
+          {post.excerpt}
+        </p>
+      )}
+
+      <div class="hero-actions">
+        <a href={`/posts/${post.slug}/`} class="primary-btn">
+          Read the full story
+        </a>
+        <button class="ghost-btn" type="button">
+          Save for later
+        </button>
+      </div>
+    </div>
+
+    <div class="hero-media">
+      {post.imageUrl ? (
+        <img
+          src={post.imageUrl}
+          alt={post.title}
+          loading="lazy"
+          class="hero-image"
+        />
+      ) : (
+        <div class="hero-image placeholder">
+          <img src="/logo.png" alt="LG News Roundup" loading="lazy" />
+        </div>
+      )}
+    </div>
+  </div>
+</article>

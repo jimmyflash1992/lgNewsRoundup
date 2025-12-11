@@ -1,4 +1,4 @@
-const DEFAULT_LOGO = "logo.png";
+const DEFAULT_LOGO = "logo.svg";
 
 document.addEventListener("DOMContentLoaded", () => {
   initThemeToggle();
@@ -347,7 +347,7 @@ function normaliseItem(item) {
     }
   }
 
-  // 6) fallback to logo.png (client should add their logo.png at repo root)
+  // 6) fallback to logo.svg (client should add their logo.svg at repo root)
   if (!imageUrl) imageUrl = DEFAULT_LOGO;
 
   return {

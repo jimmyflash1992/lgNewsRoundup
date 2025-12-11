@@ -10,11 +10,11 @@ This is a small static site that renders a curated RSS feed into a client-side n
   - `loadFeed(url)` — attempts remote feed then local `feed.xml`, parses XML via `DOMParser`.
   - `normaliseItem(item)` — canonicalises RSS `<item>` to an object: `title`, `link`, `description`, `pubDate`, `categories`, `imageUrl`.
   - `extractImgSrc(htmlText)` — simple regex extractor for images inside HTML CDATA (used for `description` / `content:encoded`).
-  - `setImageWithFallback(imgEl, src, alt)` — sets `img.src`, uses `logo.png` fallback and lazy loading.
+  - `setImageWithFallback(imgEl, src, alt)` — sets `img.src`, uses `logo.svg` fallback and lazy loading.
 
 - **Important conventions & gotchas:**
   - CORS: the client first fetches the remote feed. Running locally will likely hit CORS and fall back to `./feed.xml`. To preview a live remote-like flow, serve the site from a webserver on a domain that can request the remote feed or mock the feed URL.
-  - File expectations: the app expects `logo.png` and `favicon.png` at repo root for fallbacks/branding.
+  - File expectations: the app expects `logo.svg` and `favicon.png` at repo root for fallbacks/branding.
   - Date formatting uses `toLocaleDateString('en-AU', ...)` in `formatDate()` — dates will be Australian-style.
   - The theme is toggled by writing `data-theme` on `document.documentElement` (`applyTheme()` / `initThemeToggle()`); prefer these helpers rather than manipulating classes directly.
 
@@ -26,13 +26,13 @@ This is a small static site that renders a curated RSS feed into a client-side n
 
 - **Testing & debugging tips:**
   - Use browser DevTools Console to inspect `loadFeed()` errors — `app.js` logs parse/fetch errors and calls `showErrorState()`.
-  - To test image fallback, remove `logo.png` or point an item's `enclosure` to an invalid URL and watch `setImageWithFallback()` behaviour.
+  - To test image fallback, remove `logo.svg` or point an item's `enclosure` to an invalid URL and watch `setImageWithFallback()` behaviour.
   - For feed parsing issues check for `parsererror` nodes after `DOMParser.parseFromString()` (this is what the code does today).
 
 - **Integration points / external deps:**
   - Remote RSS: `https://lgnewsroundup.com/feed/` (hard-coded in `app.js`).
   - Google Fonts loaded in `index.html`.
-  - Visual assets: `logo.png`, `favicon.png` referenced in `index.html` and `app.js`.
+  - Visual assets: `logo.svg`, `favicon.png` referenced in `index.html` and `app.js`.
 
 - **When you change rendering logic:**
   - Keep `normaliseItem()` output shape stable (other rendering helpers expect `title`, `link`, `description`, `pubDate`, `categories`, `imageUrl`).

@@ -12,8 +12,7 @@ frontend/dist/
 frontend/public/app.js
 frontend/public/feed.xml
 frontend/public/favicon.png
-frontend/public/logo.png
-frontend/public/logo-mark.svg
+frontend/public/logo.svg
 
 # Local tooling
 .DS_Store

@@ -1,0 +1,56 @@
+---
+import type { WPPost } from "../lib/wp";
+
+export interface Props {
+  posts: WPPost[];
+}
+
+const { posts } = Astro.props;
+---
+
+<section class="stories">
+  <header class="stories-header">
+    <div>
+      <h3>More headlines</h3>
+      <p class="muted">Stories from this edition</p>
+    </div>
+    <div class="filters">
+      <button class="chip active">All</button>
+      <button class="chip">NSW</button>
+      <button class="chip">QLD</button>
+      <button class="chip">Governance</button>
+      <button class="chip">Engineering</button>
+    </div>
+  </header>
+
+  <div class="stories-list" role="list">
+    {posts.map((post) => (
+      <article class="story-card" role="listitem">
+        <a href={`/posts/${post.slug}/`} class="story-card-link">
+          <div class="story-card-media">
+            {post.imageUrl ? (
+              <img
+                src={post.imageUrl}
+                alt={post.title}
+                loading="lazy"
+                class="story-thumb"
+              />
+            ) : (
+              <div class="story-thumb placeholder">
+                <img src="/logo.png" alt="LG News Roundup" loading="lazy" />
+              </div>
+            )}
+          </div>
+          <div class="story-card-body">
+            <h4 class="story-title">{post.title}</h4>
+            {post.excerpt && (
+              <p class="story-summary">
+                {post.excerpt}
+              </p>
+            )}
+          </div>
+        </a>
+      </article>
+    ))}
+  </div>
+</section>

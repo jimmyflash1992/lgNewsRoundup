@@ -49,7 +49,7 @@ npm run check
 The Astro frontend reuses the same assets as the original static version:
 - `public/app.js` mirrors the legacy `app.js` behavior for theming and feed parsing.
 - `src/styles/global.css` is the legacy stylesheet (with Tailwind directives prepended for future utility use).
-- `public/feed.xml`, `public/logo.png`, `public/logo-mark.svg`, and `public/favicon.png` are copied directly from the legacy files.
+- `public/feed.xml`, `public/logo.svg`, and `public/favicon.png` are copied directly from the legacy files.
 
 Those mirrored assets are **not** tracked inside `frontend/public` to avoid binary-file noise in pull requests. The copies are created automatically during `npm install` via the helper script:
 

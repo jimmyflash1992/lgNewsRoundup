@@ -1,10 +1,8 @@
-import { defineConfig } from 'tailwindcss';
-import typography from '@tailwindcss/typography';
-
-export default defineConfig({
+/** @type {import('tailwindcss').Config} */
+export default {
   content: ['./src/**/*.{astro,html,js,ts,jsx,tsx}'],
   theme: {
     extend: {}
   },
-  plugins: [typography]
-});
+  plugins: []
+};

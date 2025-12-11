@@ -6,7 +6,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 PUBLIC_DIR="$ROOT_DIR/frontend/public"
-ASSETS=("app.js" "feed.xml" "favicon.png" "logo.png" "logo-mark.svg")
+ASSETS=("app.js" "feed.xml" "favicon.png" "logo.svg")
 
 mkdir -p "$PUBLIC_DIR"
 
